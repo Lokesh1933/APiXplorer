@@ -8,13 +8,14 @@ const app = express();
 const port = 3000;
 const API_URL = process.env.API_URI;
 
+
 // HINTs: Use the axios documentation as well as the video lesson to help you.
 // https://axios-http.com/docs/post_example
-// Use the Secrets API documentation to figure out what each route expects and how to work with it.
-// https://secrets-api.appbrewery.com/
+// Use the Secrets  documentation to figure out what each route expects and how to work with it.
+
 
 //TODO 1: Add your own bearer token from the previous lesson.
-const yourBearerToken = process.env.BEARER_TOKEN;
+const yourBearerToken = "4c8e40eb-c072-4a17-87f1-c3c44fa246b9";
 const config = {
   headers: { Authorization: `Bearer ${yourBearerToken}` },
 };
@@ -49,7 +50,7 @@ app.post("/put-secret", async (req, res) => {
   const searchId = req.body.id;
   // TODO 3: Use axios to PUT the data from req.body to the secrets api servers.
   try {
-    const result = await axios.put(API_URL + "/secrets" + searchId,req.body,config)
+    const result = await axios.put(API_URL + "/secrets/" + searchId,req.body,config)
     res.render("index.ejs",{content: JSON.stringify(result.data)})
 
   } catch (error) {
@@ -61,7 +62,7 @@ app.post("/patch-secret", async (req, res) => {
   const searchId = req.body.id;
   // TODO 4: Use axios to PATCH the data from req.body to the secrets api servers.
   try {
-    const result = await axios.patch(API_URL + "/secrets" + searchId,req.body,config)
+    const result = await axios.patch(API_URL + "/secrets/" + searchId,req.body,config)
     res.render("index.ejs",{content: JSON.stringify(result.data)})
   } catch (error) {
     res.render("index.ejs", { content: JSON.stringify(error.response.data) });
@@ -72,7 +73,7 @@ app.post("/delete-secret", async (req, res) => {
   const searchId = req.body.id;
   // TODO 5: Use axios to DELETE the item with searchId from the secrets api servers.
   try {
-    const result = await axios.delete(API_URL + "/secrets" + searchId,config)
+    const result = await axios.delete(API_URL + "/secrets/" + searchId,config)
     res.render("index.ejs",{content: JSON.stringify(result.data)})
   } catch (error) {
     res.render("index.ejs", { content: JSON.stringify(error.response.data) });
